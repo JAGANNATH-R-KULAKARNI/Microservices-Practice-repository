@@ -19,7 +19,11 @@ class Comments extends React.Component
 
     componentDidMount()
     {
-     this.getCommentsForPost();
+     console.log(this.props.comments)   
+     this.setState({
+        comments : this.props.comments
+    })
+   //  this.getCommentsForPost();
     }
 
     commentChangeHandler(e)

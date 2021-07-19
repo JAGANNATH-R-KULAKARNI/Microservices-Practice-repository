@@ -21,6 +21,7 @@ class Posts extends React.Component
 
     async fetchPosts()
     {
+        
         await axios.get('http://localhost:4000/posts').then((u)=>{
             console.log(u);
             console.log(u['data']);
@@ -37,9 +38,19 @@ class Posts extends React.Component
     }
 
 
-    componentDidMount()
+    async componentDidMount()
     {
-     this.fetchPosts();
+        console.log("Here getting posts from query");
+        await axios.get('http://localhost:4002/posts').then((u)=>{
+            console.log(u);
+            console.log(u['data']);
+            this.setState({
+                posts : u['data']
+            })
+        })
+        .catch((err)=>console.log(err));
+           
+   //  this.fetchPosts();
     }
 
 
@@ -51,7 +62,7 @@ class Posts extends React.Component
     }
 
     async submitButtonHandler()
-    {
+    {  
      await axios.post('http://localhost:4000/posts',{
          title : this.state.comment
      })
@@ -60,7 +71,7 @@ class Posts extends React.Component
              comment : '',
          });
          console.log("success : "+ u);
-         this.fetchPosts();
+        // this.fetchPosts();
      })
      .catch((err)=>{
         this.setState({
@@ -90,7 +101,9 @@ class Posts extends React.Component
                     <b>POSTS</b>
                     {this.state.posts &&  
                    Object.keys(this.state.posts).map((key)=>{
-                         return <PostUI key={this.state.posts[key]['id']} id={this.state.posts[key]['id']} comment={this.state.posts[key]['title']}/>;
+                         return <PostUI 
+                         key={this.state.posts[key]['id']} id={this.state.posts[key]['id']} comment={this.state.posts[key]['title']}
+                         comments={this.state.posts[key]['comments']}/>;
                         })
                     }
                 </form>

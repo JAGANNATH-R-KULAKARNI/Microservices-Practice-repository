@@ -51,7 +51,7 @@ export default function OutlinedCard(props) {
         </Typography>
         <br />
         <Typography>
-          <CommentArea Postid={props.id}/>
+          <CommentArea Postid={props.id} comments={props.comments}/>
         </Typography>
       </CardContent>
     </Card>
